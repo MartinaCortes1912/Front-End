@@ -57,31 +57,22 @@ nav {
 
     padding-left: 3vw;
 
-    background-color: #473eca;
+    background-color: #723d46;
 
     font-size: 3vh;
     font-weight: 400;
-
-}
-
-nav ul {
-    list-style: none; 
-
-    display: inline-flex;
 }
 
 nav li {
-    padding-right: 7%;
+    padding-right: 2%;
 }
 
-nav a {
-    color: #fefae0;
-    text-decoration: none;
+.nav .nav-item .nav-link {
+    color: whitesmoke;
 }
 
-.página {
-    color: #bfd200;
-
+.nav .nav-item .nav-link.active {
+    color: rgb(241, 171, 154);
 }
 
 /* CUERPO */
