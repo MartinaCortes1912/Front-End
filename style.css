@@ -56,6 +56,7 @@ nav {
     height: 10vh;
 
     padding-left: 3vw;
+    display: flex;
 
     background-color: #723d46;
 
@@ -64,7 +65,7 @@ nav {
 }
 
 nav li {
-    padding-right: 2%;
+    align-self: center;
 }
 
 .nav .nav-item .nav-link {
@@ -75,10 +76,13 @@ nav li {
     color: rgb(241, 171, 154);
 }
 
+
 /* CUERPO */
 main {
     background-color: whitesmoke;
 }
+
+
 
 /* INICIO */
 .index {
