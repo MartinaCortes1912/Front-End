@@ -169,6 +169,12 @@ main {
 
 }
 
+.botónProducto {
+    background-color: grey;
+    color:whitesmoke;
+    border: none;
+}
+
 /* NOSOTROS */
 
 .nosotros {
