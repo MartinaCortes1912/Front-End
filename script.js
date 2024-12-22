@@ -1,20 +1,29 @@
 //API
 document.addEventListener('DOMContentLoaded', () => {
+    const estoyCarrito = document.getElementById("carrito");
+    if (estoyCarrito) { cargarCarrito() }
     fetch('https://fakestoreapi.com/products')
                 .then(res=>res.json())
-                .then(producto => {
+                .then(productos => {
                 const catálogo = document.getElementById("catálogo");
                 if (catálogo) {
-                producto.forEach((producto) => {
-                const nuevaTarjeta = document.createElement("div")
-                nuevaTarjeta.classList.add ("card")
-    //               nuevaTarjeta.setAttribute("id",`"${producto.id}"`) 
-                nuevaTarjeta.innerHTML = `
-                    <img class="cardrow1" src="${producto.image}" alt="${producto.title}"></img>
-                    <p class="cardrow2">${producto.title}</p>   
-                    <p class="cardcolor">${producto.category}</p>
-                    <p class="cardrow3">$ ${producto.price}</p>
-                    <button type="button" class="botónProducto" onClick="añadirCarrito()">+</button> `;
+                    productos.forEach((producto) => {
+                    const nuevaTarjeta = document.createElement("div")
+                    nuevaTarjeta.classList.add ("card")
+                
+                    nuevaTarjeta.innerHTML = `
+                        <img class="cardrow1" src="${producto.image}" alt="${producto.title}"></img>
+                        <p class="cardrow2">${producto.title}</p>   
+                        <p class="cardcolor">${producto.category}</p>
+                        <p class="cardrow3">$ ${producto.price}</p>`;
+
+                    const botón = document.createElement("button")
+                    botón.type = "button"
+                    botón.classList.add ("botónProducto")
+                    botón.textContent= "+"
+                    botón.addEventListener('click', () => añadirCarrito(producto));
+
+                    nuevaTarjeta.appendChild(botón);
 
                     catálogo.appendChild(nuevaTarjeta)
                     }); }
@@ -22,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Mostrar algunos productos (Llamado) 
                 const index = document.getElementById("index");
                 if (index) {
-                    mostrarAlgunos(index,producto) }
+                    mostrarAlgunos(index,productos) }
                 })
 
                 .catch(error=> {
@@ -47,25 +56,62 @@ function completarFormulario() {
 };
 
 
+
+
 //CARRITO
+function cargarCarrito() {
+    let lista = document.getElementById("carrito")
+    let miLista = document.getElementById("miCarrito")
+    let carrito = JSON.parse(localStorage.getItem("carrito"))
+    if (carrito)  {
+    lista.innerHTML= ``
 
+    const botónLimpiar = document.createElement("button")
+    botónLimpiar.type = "button"
+    botónLimpiar.id = "botónVaciar"
+    botónLimpiar.textContent= "Vaciar mi carrito"
+    botónLimpiar.addEventListener('click', () => vaciarCarrito());
 
-function añadirCarrito(event) {
-    var productoCarrito = {
-        id: event.target.getAttribute(producto.id)}  
-    let nuevoCarrito = JSON.parse(localStorage.getItem(carrito)) || [];
-    nuevoCarrito.push(productoCarrito)  
-    localStorage.setItem(carrito, JSON.stringify(nuevoCarrito))
-    console.log(localStorage(carrito))
+    miLista.appendChild(botónLimpiar);  
+
+    for (var i= 0; i < carrito.length; i++) {
+    let item = document.createElement("li")
+    item.textContent = "$ " + carrito[i].precio + "    -    " + carrito[i].nombre
+
+    const botón = document.createElement("button")
+    botón.type = "button"
+    botón.textContent= "  -  "
+    botón.addEventListener('click', () => eliminarCarrito(carrito[i]));
+
+    item.appendChild(botón);
+
+    lista.appendChild(item)  
+}
+    } else {
+    lista.innerHTML= `<li>Tu carrito está vacío.</li>`
+    }
 }
 
 
-function eliminarCarrito () {
+function añadirCarrito(sumado) {
+    var productoAñadido = { id: sumado.id, nombre: sumado.title, precio: sumado.price}
+    let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+    carrito.push(productoAñadido)  
+    localStorage.setItem("carrito", JSON.stringify(carrito))
+    console.log(localStorage.getItem("carrito"))
+
+}
+
+
+function eliminarCarrito (eliminado) {
 
 }
 
 function vaciarCarrito () {
-
+    localStorage.clear()
+    const botónVaciar = document.getElementById("botónVaciar");
+    botónVaciar.remove();
+    cargarCarrito()
 }
 
 
