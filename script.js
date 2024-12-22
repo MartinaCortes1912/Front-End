@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     fetch('https://fakestoreapi.com/products')
                 .then(res=>res.json())
                 .then(productos => {
+                // Mostrar productos
                 const catálogo = document.getElementById("catálogo");
                 if (catálogo) {
                     productos.forEach((producto) => {
@@ -63,7 +64,8 @@ function cargarCarrito() {
     let lista = document.getElementById("carrito")
     let miLista = document.getElementById("miCarrito")
     let carrito = JSON.parse(localStorage.getItem("carrito"))
-    if (carrito)  {
+
+    if (carrito && carrito.length > 0)  {
     lista.innerHTML= ``
 
     const botónLimpiar = document.createElement("button")
@@ -86,7 +88,8 @@ function cargarCarrito() {
     item.appendChild(botón);
 
     lista.appendChild(item)  
-}
+    }
+
     } else {
     lista.innerHTML= `<li>Tu carrito está vacío.</li>`
     }
@@ -104,7 +107,20 @@ function añadirCarrito(sumado) {
 
 
 function eliminarCarrito (eliminado) {
+    let carrito = JSON.parse(localStorage.getItem("carrito"));
+    let carritoEliminado = []
+    let realizado = false
+    carrito.forEach((item) => {
+        if (carrito.id == eliminado && realizado == false) {
+            realizado = true
+        } else {
+            carritoEliminado.push(item) 
+        }})
 
+    localStorage.setItem("carrito", JSON.stringify(carritoEliminado))
+    const botónVaciar = document.getElementById("botónVaciar");
+    botónVaciar.remove();  
+    cargarCarrito()  
 }
 
 function vaciarCarrito () {
