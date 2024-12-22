@@ -1,26 +1,34 @@
 //API
-fetch('https://fakestoreapi.com/products')
-            .then(res=>res.json())
-            .then(producto => {
-            console.log("Conexión con la API exitosa.")
-               const catálogo = document.getElementById("catálogo");
-               producto.forEach((producto) => {
-               const nuevaTarjeta = document.createElement("div")
-               nuevaTarjeta.classList.add ("card")
-               nuevaTarjeta.innerHTML = `
-                <img class="cardrow1" src="${producto.image}" alt="${producto.title}"></img>
-                <p class="cardrow2">${producto.title}</p>   
-                <p class="cardcolor">${producto.category}</p>
-                <p class="cardrow3">${producto.price}</p>
-                <button type="button" class="botónProducto" id="${producto.id}">+</button> `;
+document.addEventListener('DOMContentLoaded', () => {
+    fetch('https://fakestoreapi.com/products')
+                .then(res=>res.json())
+                .then(producto => {
+                const catálogo = document.getElementById("catálogo");
+                if (catálogo) {
+                producto.forEach((producto) => {
+                const nuevaTarjeta = document.createElement("div")
+                nuevaTarjeta.classList.add ("card")
+    //               nuevaTarjeta.setAttribute("id",`"${producto.id}"`) 
+                nuevaTarjeta.innerHTML = `
+                    <img class="cardrow1" src="${producto.image}" alt="${producto.title}"></img>
+                    <p class="cardrow2">${producto.title}</p>   
+                    <p class="cardcolor">${producto.category}</p>
+                    <p class="cardrow3">$ ${producto.price}</p>
+                    <button type="button" class="botónProducto" onClick="añadirCarrito()">+</button> `;
 
-               catálogo.appendChild(nuevaTarjeta)
-                });
-            })        
-            
-            .catch(error=> {
-                console.error("Error en la conexión con la API",error) 
-                alert("El servidor está teniendo problemas de conectividad en el momento")
+                    catálogo.appendChild(nuevaTarjeta)
+                    }); }
+        
+                // Mostrar algunos productos (Llamado) 
+                const index = document.getElementById("index");
+                if (index) {
+                    mostrarAlgunos(index,producto) }
+                })
+
+                .catch(error=> {
+                    console.error("Error:",error) 
+                    alert("El servidor está teniendo problemas de conectividad en el momento")
+                })
             })
 
 //Formulario Completo
@@ -38,11 +46,41 @@ function completarFormulario() {
         alert("El formulario no ha sido completado correctamente.")
 };
 
-document.getElementById("botónFomrulario").addEventListener("click", () => completarFormulario());
 
-// Crear un ciclo que genere dinámicamente una lista de productos disponibles y los muestre en la consola.
-// Crear un listado de productos incluidos en nuestro HTML generado por medio de una función en Js. 
-// Crear de una función que cree un array de productos y los muestre en la página utilizando una plantilla HTML dinámica.
+//CARRITO
+
+
+function añadirCarrito(event) {
+    var productoCarrito = {
+        id: event.target.getAttribute(producto.id)}  
+    let nuevoCarrito = JSON.parse(localStorage.getItem(carrito)) || [];
+    nuevoCarrito.push(productoCarrito)  
+    localStorage.setItem(carrito, JSON.stringify(nuevoCarrito))
+    console.log(localStorage(carrito))
+}
+
+
+function eliminarCarrito () {
+
+}
+
+function vaciarCarrito () {
+
+}
+
+
+// Mostrar algunos productos (Función)
+function mostrarAlgunos (lugar, recurso) {
+for (var i= 0; i < 4; i++) {
+    const imagen = document.createElement("img");   
+    imagen.src = recurso[i].image
+    imagen.style.width = "25%";
+
+    lugar.appendChild(imagen);
+};}
+
+ 
+
 
 
 
