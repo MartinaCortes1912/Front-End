@@ -104,6 +104,7 @@ function añadirCarrito(sumado) {
     carrito.push(productoAñadido)  
     localStorage.setItem("carrito", JSON.stringify(carrito))
     console.log(localStorage.getItem("carrito"))
+    alert("Se ha añadido un producto a tu carrito.")
 
 }
 
