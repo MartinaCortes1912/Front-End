@@ -71,6 +71,7 @@ function cargarCarrito() {
     const botónLimpiar = document.createElement("button")
     botónLimpiar.type = "button"
     botónLimpiar.id = "botónVaciar"
+    botónLimpiar.classList.add("botónVaciar")
     botónLimpiar.textContent= "Vaciar mi carrito"
     botónLimpiar.addEventListener('click', () => vaciarCarrito());
 
@@ -83,6 +84,7 @@ function cargarCarrito() {
     const botón = document.createElement("button")
     botón.type = "button"
     botón.textContent= "  -  "
+    botónLimpiar.classList.add("botónEliminar")
     botón.addEventListener('click', () => eliminarCarrito(carrito[i]));
 
     item.appendChild(botón);
